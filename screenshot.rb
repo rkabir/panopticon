@@ -9,10 +9,14 @@ day = dt.day.to_s.length == 1 ? "0#{dt.day}" : dt.day.to_s
 
 date_path = "#{year}/#{month}/#{day}/"
 path = path + date_path
+external_path = path + external
 
 %x[ mkdir -p #{path}]
+%x[ mkdir -p #{external_path}]
 
-filename1 = path + "#{year}_#{month}_#{day}_#{dt.hour}_#{dt.min}_#{dt.sec}.jpg"
-filename2 = path + external + "#{year}_#{month}_#{day}_#{dt.hour}_#{dt.min}_#{dt.sec}_2.jpg"
+file_base = "#{year}_#{month}_#{day}_#{dt.hour}_#{dt.min}_#{dt.sec}"
+
+filename1 = path + "#{file_base}.jpg"
+filename2 = external_path + "#{file_base}_2.jpg"
 
 %x[ /usr/sbin/screencapture -tjpg -x #{filename1} #{filename2}]
